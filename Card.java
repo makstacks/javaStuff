@@ -677,7 +677,7 @@ public class Card {
             else if ((deckInd == 'C' && (chosenCat.equals("prominence") || chosenCat.equals("pr") || chosenCat.equals("p") || chosenCat.equals("P"))) ||
                     (deckInd == 'A' && (chosenCat.equals("likeability") || chosenCat.equals("li") || chosenCat.equals("like") || chosenCat.equals("Li"))) ||
                     (deckInd == 'M' && (chosenCat.equals("c") || chosenCat.equals("cs") || chosenCat.equals("combat skills") || chosenCat.equals("C")))) {
-                System.out.println("        vs.");4
+                System.out.println("        vs.");
                 theDeck[chlngDeckIdxA].showCard(cat1, cat2, cat3, cat4, cat5);
                 ratingPld = theDeck[pldDeckIdx].rating5;
                 ratingA = theDeck[chlngDeckIdxA].rating5;
@@ -928,7 +928,7 @@ public class Card {
                 if (deck1.size() == 0) {
                     if (deck2.size() > 0 && deck3.size() > 0) {
                         if (pOut == 0) {
-                            System.out.println("Player 1 is out");
+                            System.out.println("\nPlayer 1 is out");
                             pOut = 1;
                         }
                     } else if (deck2.size() == 0) {
@@ -942,7 +942,7 @@ public class Card {
                 if (deck2.size() == 0) {
                     if (deck1.size() > 0 && deck3.size() > 0) {
                         if (pOut == 0) {
-                            System.out.println("Player 2 is out");
+                            System.out.println("\nPlayer 2 is out");
                         }
                         pOut = 2;
                     }
@@ -954,7 +954,7 @@ public class Card {
                 if (deck3.size() == 0) {
                     if (deck2.size() > 0 && deck1.size() > 0) {
                         if (pOut == 0) {
-                            System.out.println("Player 3 is out");
+                            System.out.println("\nPlayer 3 is out");
                         }
                         pOut = 3;
                     }
@@ -1100,7 +1100,7 @@ public class Card {
                     if (deck2.size() > 0 && deck3.size() > 0 || deck2.size() > 0 && deck4.size() > 0 ||
                     deck3.size() > 0 && deck4.size() > 0) {
                         if (pOut == 0 || pOut2 == 0) {
-                            System.out.println("Player 1 is out");
+                            System.out.println("\nPlayer 1 is out");
                             if (pOut == 0) {
                                 pOut = 1;
                             } else {
@@ -1125,7 +1125,7 @@ public class Card {
                     if (deck1.size() > 0 && deck3.size() > 0 || deck1.size() > 0 && deck4.size() > 0 ||
                             deck3.size() > 0 && deck4.size() > 0) {
                         if (pOut == 0 || pOut2 == 0) {
-                            System.out.println("Player 2 is out");
+                            System.out.println("\nPlayer 2 is out");
                             if (pOut == 0) {
                                 pOut = 2;
                             } else {
@@ -1141,7 +1141,7 @@ public class Card {
                     if (deck1.size() > 0 && deck2.size() > 0 || deck1.size() > 0 && deck4.size() > 0 ||
                             deck2.size() > 0 && deck4.size() > 0) {
                         if (pOut == 0 || pOut2 == 0) {
-                            System.out.println("Player 3 is out");
+                            System.out.println("\nPlayer 3 is out");
                             if (pOut == 0) {
                                 pOut = 3;
                             } else {
@@ -1154,7 +1154,7 @@ public class Card {
                     if (deck1.size() > 0 && deck2.size() > 0 || deck1.size() > 0 && deck3.size() > 0 ||
                             deck2.size() > 0 && deck3.size() > 0) {
                         if (pOut == 0 || pOut2 == 0) {
-                            System.out.println("Player 4 is out");
+                            System.out.println("\nPlayer 4 is out");
                             if (pOut == 0) {
                                 pOut = 4;
                             } else {
@@ -1183,15 +1183,3 @@ public class Card {
             }
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
