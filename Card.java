@@ -290,9 +290,9 @@ public class Card {
         int pO = 0;
 
         //adjusting deck size to be divisible by number of players
-      /*  while (numCards % numP != 0) {
+        while (numCards % numP != 0) {
             numCards -= 1;
-        } */
+        }
 
 //randomly dealing cards into temporary deck then assigning into player decks
         for (int i = 1; i < numCards + 1; i++) {
@@ -332,7 +332,7 @@ public class Card {
 
 
 
-        //main section of the game
+        //main section of the game, only go through this if we have enough players left
         while ((numP == 2 && deck1.size() != 0 && deck2.size() != 0) ||
 
                 (numP == 3 && (deck1.size() != 0 && deck2.size() != 0 ||
