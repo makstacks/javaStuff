@@ -24,6 +24,31 @@ public class Card {
 
     }
 
+//method to find out who drew and who lost in the previous round so that the losers cant win current round and their
+// card is excluded
+    public static int[] findDrawers(int rp1p, int rp2p, int rp3p, int rp4p) {
+//creating array to store the values of played ratings in prev round
+        int[] rpPrv = {rp1p, rp2p, rp3p, rp4p};
+        //start with first value of array to compare, and initialise values to store the lowest values
+        int max1 = rpPrv[0];
+        for (int i=1; i<rpPrv.length; i++) {
+            if (rpPrv[i] > max1) {
+                max1 = rpPrv[i];   // new maximum
+            }
+        }
+        //create array to store indicators of which players won and which lost
+        int[] drawIndArray = {0, 0, 0, 0};
+        for (int i=0; i<rpPrv.length; i++) {
+            if (rpPrv[i] == max1) {
+                drawIndArray[i] = 1;   // set to a 1 if into next round
+            }
+        }
+        for (int i=0; i<4; i++) {
+        System.out.println(drawIndArray[i]);}
+        return drawIndArray;
+    }//end method draw lose stuff
+
+    //method to show card during the game
     public void showCard(String c1, String c2, String c3, String c4, String c5) {
 
         System.out.println(name);
@@ -34,6 +59,7 @@ public class Card {
         System.out.println(c5 + ": " + rating5);
     }
 
+    //method to ask user to hit enter in between rounds
     public static void promptEnterKey() {
         System.out.println("Press \"ENTER\" to continue...");
         try {
@@ -169,6 +195,19 @@ public class Card {
         marvelDeck[21] = new Card(22, "THE WINTER SOLDIER", 89, 88, 86, 67, 90);
         marvelDeck[22] = new Card(23, "THOR", 99, 93, 98, 92, 97);
 
+/*
+        Card[] marvelDeck = new Card[9];
+        marvelDeck[0] = new Card(1, "SPIDERMAN", 90, 99, 94, 92, 96);
+        marvelDeck[1] = new Card(2, "IRON MAN", 90, 90, 88, 93, 95);
+        marvelDeck[2] = new Card(3, "THANOS", 90, 83, 97, 96, 96);
+        marvelDeck[3] = new Card(4, "HULK", 9, 65, 100, 25, 60);
+        marvelDeck[4] = new Card(5, "NICK FURY", 3, 50, 45, 77, 58);
+        marvelDeck[5] = new Card(6, "LOKI", 90, 65, 82, 96, 72);
+        marvelDeck[6] = new Card(7, "ALGRIM", 90, 60, 99, 40, 76);
+        marvelDeck[7] = new Card(8, "TREVOR SLATTERY", 90, 1, 5, 1, 1);
+        marvelDeck[8] = new Card(9, "ARNIM ZOLA", 0, 0, 0, 91, 0);
+debugging using this deck
+        */
 
         char deckInd = 'D';
         int numCards = 0;
@@ -185,6 +224,13 @@ public class Card {
         int playerInd = 1;
         int pIndPrv = 0;
         int l = 1;
+
+        //indicators for player who won the round and number of players in the game
+        int pWinner = 0;
+        int pWinnerA = 0;
+        int pWinnerB = 0;
+        int pWinnerC = 0;
+        int pWinnerD = 0;
 
         int numP = 0;
 
@@ -279,15 +325,26 @@ public class Card {
         int ratingB = 0;
         int ratingC = 0;
 
+        //initialising indicators to store each players played rating for current and previous round
         int rp1 = 0;
         int rp2 = 0;
         int rp3 = 0;
         int rp4 = 0;
+        int rp1Prv = 0;
+        int rp2Prv = 0;
+        int rp3Prv = 0;
+        int rp4Prv = 0;
 
-        //set indicator for which player/s is out
+        //set indicator for which player/s is out, how many are out and who to ignore for certain rounds
         int pOut = 0;
         int pOut2 = 0;
         int pO = 0;
+
+        int numOut = 0;
+
+        int pIgnA = 0;
+        int pIgnB = 0;
+
 
         //adjusting deck size to be divisible by number of players
         while (numCards % numP != 0) {
@@ -343,6 +400,7 @@ public class Card {
                                 deck2.size() != 0 && (deck3.size() != 0 || deck4.size() != 0) ||
                         (deck4.size() != 0 && deck3.size() != 0)))) {
 
+
             //setting which card is played/challenged based on the playerInd
             if (numP == 2) {
                 if (playerInd == 1) {
@@ -356,16 +414,16 @@ public class Card {
 
             if (numP == 3) {
                 if (playerInd == 1){
-                if (pOut == 1) {
+                if (pOut == 1 && pOut2 != 3) {
                     playerInd = 2;
                     cardPlayedIdx = deck2.get(0);
                     cardChallengedIdxA = deck3.get(0);
                 }
-                else if (pOut == 2) {
+                else if (pOut == 2 && pOut2 != 3) {
                     cardPlayedIdx = deck1.get(0);
                     cardChallengedIdxA = deck3.get(0);
                 }
-                else if (pOut == 3) {
+                else if (pOut == 3 && pOut2 != 3) {
                     cardPlayedIdx = deck1.get(0);
                     cardChallengedIdxA = deck2.get(0);
                 }
@@ -376,14 +434,14 @@ public class Card {
                 }
             }
                 else if (playerInd == 2) {
-                    if (pOut == 1) {
+                    if (pOut == 1 && pOut2 != 2) {
                         cardPlayedIdx = deck2.get(0);
                         cardChallengedIdxA = deck3.get(0);
                     } else if (pOut == 2) {
                         playerInd = 3;
                         cardPlayedIdx = deck3.get(0);
                         cardChallengedIdxA = deck1.get(0);
-                    } else if (pOut == 3) {
+                    } else if (pOut == 3 && pOut2 != 2) {
                         cardPlayedIdx = deck2.get(0);
                         cardChallengedIdxA = deck1.get(0);
                     } else if (pOut == 0) {
@@ -393,13 +451,13 @@ public class Card {
                     }
                 }
                 else {
-                    if (pOut == 1) {
+                    if (pOut == 1 && pOut2 != 3) {
                         cardPlayedIdx = deck3.get(0);
                         cardChallengedIdxA = deck2.get(0);
-                    } else if (pOut == 2) {
+                    } else if (pOut == 2 && pOut2 != 3) {
                         cardPlayedIdx = deck3.get(0);
                         cardChallengedIdxA = deck1.get(0);
-                    } else if (pOut == 3) {
+                    } else if (pOut == 3 && pOut2 != 3) {
                         playerInd = 1;
                         cardPlayedIdx = deck1.get(0);
                         cardChallengedIdxA = deck2.get(0);
@@ -473,7 +531,7 @@ public class Card {
                             cardChallengedIdxB = deck4.get(0);
                         }
                         if (pOut == 0) {
-                            cardChallengedIdxC = deck4.get(0);
+                            cardChallengedIdxC = deck1.get(0);
                         }
                     }
                 }
@@ -539,7 +597,7 @@ public class Card {
                             cardChallengedIdxB = deck3.get(0);
                         }
                         if (pOut == 0) {
-                            cardChallengedIdxC = deck4.get(0);
+                            cardChallengedIdxC = deck3.get(0);
                         }
                     }
                 }
@@ -783,7 +841,7 @@ public class Card {
                 }
             }
 
-            //finding winner and assigning cards
+            //finding winner and assigning cards for 2p game
             if (numP == 2) {
                 //if player 1 wins
                 if (rp1 > rp2) {
@@ -799,6 +857,7 @@ public class Card {
                     deck2.remove(0);
 
                     System.out.println("\nP1 wins the round");
+                    pWinner = 1;
                 }
                 //if player 2 wins
                 else if (rp1 < rp2) {
@@ -814,6 +873,7 @@ public class Card {
                     deck2.remove(0);
 
                     System.out.println("\nP2 wins the round");
+                    pWinner = 2;
                 } else {
                     //put cards into middle and go again
                     drawDeck.add(deck1.get(0));
@@ -834,7 +894,7 @@ public class Card {
                     System.out.println("Player 1 wins the whole gosh darn game. What a performance.");
                 }
             }
-
+//finding winner and assigning cards for 3p game
             if (numP == 3) {
                 //if player 1 wins
                 if (rp1 > rp2 && rp1 > rp3) {
@@ -855,6 +915,7 @@ public class Card {
                         deck3.remove(0);
                     }
                     System.out.println("\nP1 wins the round");
+                    pWinner = 1;
                 }
                 //if player 2 wins
                 else if (rp2 > rp1 && rp2 > rp3) {
@@ -875,6 +936,7 @@ public class Card {
                         deck3.remove(0);
                     }
                     System.out.println("\nP2 wins the round");
+                    pWinner = 2;
                 }
                 //if player 3 wins
                 else if (rp3 > rp1 && rp3 > rp2) {
@@ -895,19 +957,20 @@ public class Card {
                         deck2.remove(0);
                     }
                     System.out.println("\nP3 wins the round");
+                    pWinner = 3;
                 }
                 //draw only remaining possibility
                 else {
                     //put cards into middle and go again
-                    if (pOut != 1) {
+                    if (pOut != 1 && pOut2 != 1) {
                         drawDeck.add(deck1.get(0));
                         deck1.remove(0);
                     }
-                    if (pOut != 2) {
+                    if (pOut != 2 && pOut2 != 2) {
                         drawDeck.add(deck2.get(0));
                         deck2.remove(0);
                     }
-                    if (pOut != 3) {
+                    if (pOut != 3 && pOut2 != 3) {
                         drawDeck.add(deck3.get(0));
                         deck3.remove(0);
                     }
@@ -930,6 +993,7 @@ public class Card {
                         if (pOut == 0) {
                             System.out.println("\nPlayer 1 is out");
                             pOut = 1;
+                            numOut ++;
                         }
                     } else if (deck2.size() == 0) {
                         System.out.println("Player 3 wins!");
@@ -945,6 +1009,7 @@ public class Card {
                             System.out.println("\nPlayer 2 is out");
                         }
                         pOut = 2;
+                        numOut ++;
                     }
                     else if (deck3.size() == 0) {
                         System.out.println("Player 1 wins!");
@@ -957,10 +1022,11 @@ public class Card {
                             System.out.println("\nPlayer 3 is out");
                         }
                         pOut = 3;
+                        numOut ++;
                     }
                 }
             }
-
+//finding winner and assigning cards for 4p game
             if (numP == 4) {
                 //if player 1 wins
                 if (rp1 > rp2 && rp1 > rp3 && rp1 > rp4) {
@@ -985,6 +1051,7 @@ public class Card {
                         deck4.remove(0);
                     }
                     System.out.println("\nP1 wins the round");
+                    pWinner = 1;
                 }
                 //if player 2 wins
                 else if (rp2 > rp1 && rp2 > rp3 && rp2 > rp4) {
@@ -1009,6 +1076,7 @@ public class Card {
                         deck4.remove(0);
                     }
                     System.out.println("\nP2 wins the round");
+                    pWinner = 2;
                 }
                 //if player 3 wins
                 else if (rp3 > rp1 && rp3 > rp2 && rp3 > rp4) {
@@ -1033,8 +1101,8 @@ public class Card {
                         deck4.remove(0);
                     }
                     System.out.println("\nP3 wins the round");
+                    pWinner = 3;
                 }
-
                 //if player 4 wins
                 else if (rp4 > rp1 && rp4 > rp2 && rp4 > rp3) {
                     if (drawDeck.isEmpty() == false) {
@@ -1058,27 +1126,27 @@ public class Card {
                         deck3.remove(0);
                     }
                     System.out.println("\nP4 wins the round");
+                    pWinner = 4;
                 }
                 //draw
                 else {
                     //put cards into middle and go again
-                    if (pOut != 1) {
+                    if (pOut != 1 && pOut2 != 1) {
                         drawDeck.add(deck1.get(0));
                         deck1.remove(0);
                     }
-                    if (pOut != 2) {
+                    if (pOut != 2 && pOut2 != 2) {
                         drawDeck.add(deck2.get(0));
                         deck2.remove(0);
                     }
-                    if (pOut != 3) {
+                    if (pOut != 3 && pOut2 != 3) {
                         drawDeck.add(deck3.get(0));
                         deck3.remove(0);
                     }
-                    if (pOut != 4) {
+                    if (pOut != 4 && pOut2 != 4) {
                         drawDeck.add(deck3.get(0));
                         deck3.remove(0);
                     }
-
                     System.out.println("\nDraw");
                 }
                 if (pOut != 1 && pOut2 != 1) {
@@ -1103,8 +1171,10 @@ public class Card {
                             System.out.println("\nPlayer 1 is out");
                             if (pOut == 0) {
                                 pOut = 1;
+                                numOut ++;
                             } else {
                                 pOut2 = 1;
+                                numOut ++;
                             }
                         }
                     }
@@ -1128,8 +1198,10 @@ public class Card {
                             System.out.println("\nPlayer 2 is out");
                             if (pOut == 0) {
                                 pOut = 2;
+                                numOut ++;
                             } else {
                                 pOut2 = 2;
+                                numOut ++;
                             }
                         }
                     }else if (deck1.size() > 0 && deck3.size() == 0 && deck4.size() == 0) {
@@ -1144,8 +1216,10 @@ public class Card {
                             System.out.println("\nPlayer 3 is out");
                             if (pOut == 0) {
                                 pOut = 3;
+                                numOut ++;
                             } else {
                                 pOut2 = 3;
+                                numOut ++;
                             }
                         }
                     }
@@ -1157,11 +1231,115 @@ public class Card {
                             System.out.println("\nPlayer 4 is out");
                             if (pOut == 0) {
                                 pOut = 4;
+                                numOut ++;
                             } else {
                                 pOut2 = 4;
+                                numOut ++;
                             }
                         }
                     }
+                }
+            }
+
+            //setting variables to save each players score of the previous round
+            rp1Prv = rp1;
+            rp2Prv = rp2;
+            rp3Prv = rp3;
+            rp4Prv = rp4;
+
+            //if in the previous round we had set certain players to be ignored, then we need to reset the pOut variable(s)
+            if (pIgnA > 0) {
+                pOut2 = 0;
+            }
+            if (pIgnB > 0) {
+                pOut = 0;
+                pOut2 = 0;
+            }
+            //resetting indicators for which players to ignore next round if not another draw
+            if (drawDeck.isEmpty() && numP > 2) {
+                pIgnA = 0;
+                pIgnB = 0;
+            }
+            //if there was a draw we need to see who drew and who scored lower, so that we can ignore their card the next round
+            if (!drawDeck.isEmpty() && numP > 2) {
+//calling the draw/lose indicator array
+                int[] dIndArr = findDrawers(rp1, rp2, rp3, rp4);
+                //loop through draw ind array to find indicators, 0 in the array means we're ignoring them
+                for (int i = 0; i<4; i++) {
+                    if (dIndArr[i] == 0) {
+                        //setting ignore indicator(s) to the player
+                        //only set second indicator if weve assigned the first one
+                        if (pIgnA != 0) {
+                            pIgnB = i + 1;
+                        } else if (pIgnA == 0) {
+                            pIgnA = i + 1;
+                        }
+                    }
+                        //setting the winners of the round
+                    else if (dIndArr[i] == 1) {
+                        if (pWinnerA == 0) {
+                            pWinnerA = i + 1;
+                        }
+                        else if (pWinnerA != 0 && pWinnerB != 0) {
+                            pWinnerC = i + 1;
+                        }
+                        else if (pWinner != 0){
+                            pWinnerB = i + 1;
+                        }
+                    }
+                  }
+                               //array of which players drew eg. [1, 3, 0, 0]: 2 would be out of the next round i.e pIgnA = 2
+                int[] whoDrew = {pWinnerA, pWinnerB, pWinnerC, pWinnerD};
+                //count number of nonzero elements
+                int numDrawers = 0;
+                int numDout = 0;
+                for (int i = 0; i<4; i++) {
+                    //number of players who drew
+                    if (whoDrew[i] > 0) {
+                        numDrawers++;
+                    }
+                    // if player drawing also has no cards left
+                    if (whoDrew[i] > 0 && (pOut == whoDrew[i] || pOut2 == whoDrew[i])) {
+                        numDout += 1;
+                    }
+                }
+
+                for (int i = 0; i<4; i++) {
+                                      //if drawing player still has cards
+                            if (whoDrew[i] > 0 && whoDrew[i] != pOut && whoDrew[i] != pOut) {
+
+                            //if we have one drawer with cards remaining
+                            if (numDrawers == numDout + 1){
+                                for (int j = 0; j < drawDeck.size(); j++) {
+                                    if (pWinnerA == 1) {
+                                        deck1.add(drawDeck.get(j));
+                                    }
+                                    if (pWinnerA == 2) {
+                                        deck2.add(drawDeck.get(j));
+                                    }
+                                    if (pWinnerA == 3) {
+                                        deck3.add(drawDeck.get(j));
+                                    }
+                                    if (pWinnerA == 4) {
+                                        deck4.add(drawDeck.get(j));
+                                    }
+                                    drawDeck.removeAll(drawDeck);
+                            }
+                        }
+                    }
+                }
+
+                //setting the players to ignore as out, the pOut values will switch back following next round
+                //if we have stored a value in the second ignore variable we can use the first pOut variable 4p need to
+                //be active for pIgnB to have a value
+                if (pOut != 0 && pIgnA != pOut) {
+                    pOut2 = pIgnA;
+                }
+                if (pOut == 0) {
+                    pOut = pIgnA;
+                }
+                if (pOut != 0 && pOut2 == 0 && pIgnB != 0) {
+                    pOut2 = pIgnB;
                 }
             }
 
