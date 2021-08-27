@@ -167,7 +167,7 @@ public class Card {
         athletesDeck[29] = new Card(30, "JOHNNY WILKINSON", 13, 65, 74, 84, 7);
 
 
-        Card[] marvelDeck = new Card[23];
+        Card[] marvelDeck = new Card[60];
 //cat1: power rating, cat2: agility, cat3: strength, cat4: intelligence, cat5: combat skills
         marvelDeck[0] = new Card(1, "SPIDERMAN", 91, 99, 94, 92, 96);
         marvelDeck[1] = new Card(2, "IRON MAN", 87, 90, 88, 93, 95);
@@ -192,6 +192,43 @@ public class Card {
         marvelDeck[20] = new Card(21, "EGO", 89, 15, 98, 90, 40);
         marvelDeck[21] = new Card(22, "THE WINTER SOLDIER", 89, 88, 86, 67, 90);
         marvelDeck[22] = new Card(23, "THOR", 99, 93, 98, 92, 97);
+        marvelDeck[23] = new Card(24, "FENRIS", 72, 50, 78, 10, 74);
+        marvelDeck[24] = new Card(25, "SHURI", 65, 65, 25, 100, 60);
+        marvelDeck[25] = new Card(26, "RONAN THE ACCUSER", 93, 86, 90, 85, 94);
+        marvelDeck[26] = new Card(27, "MANDARIN", 86, 70, 81, 86, 70);
+        marvelDeck[27] = new Card(28, "DRAX THE DESTROYER", 81, 84, 88, 20, 77);
+        marvelDeck[28] = new Card(29, "DESTROYER", 83, 65, 84, 50, 70);
+        marvelDeck[29] = new Card(30, "ODIN", 100, 75, 96, 99, 95);
+        marvelDeck[30] = new Card(31, "WONG", 87, 2, 47, 90, 45);
+        marvelDeck[31] = new Card(32, "KAECILIUS", 85, 60, 65, 80, 80);
+        marvelDeck[32] = new Card(33, "BLACK WIDOW", 55, 97, 30, 80, 100);
+        marvelDeck[33] = new Card(34, "RED SKULL", 55, 50, 60, 62, 60);
+        marvelDeck[34] = new Card(35, "VISION", 94, 93, 94, 99, 82);
+        marvelDeck[35] = new Card(36, "CORVUS GLAIVE", 76, 83, 63, 71, 82);
+        marvelDeck[36] = new Card(37, "GROOT", 92, 40, 93, 20, 50);
+        marvelDeck[37] = new Card(38, "WAR MACHINE", 84, 86, 84, 76, 78);
+        marvelDeck[38] = new Card(39, "VALKYRIE", 87, 83, 85, 78, 87);
+        marvelDeck[39] = new Card(40, "PROXIMA MIDNIGHT", 80, 92, 74, 78, 86);
+        marvelDeck[40] = new Card(41, "OKOYE", 55, 87, 40, 68, 93);
+        marvelDeck[41] = new Card(42, "DORMAMMU", 100, 75, 100, 95, 70);
+        marvelDeck[42] = new Card(43, "HULKBUSTER", 93, 60, 97, 0, 81);
+        marvelDeck[43] = new Card(44, "ROCKET RACCOON", 65, 98, 47, 90, 85);
+        marvelDeck[44] = new Card(45, "QUICKSILVER", 75, 100, 30, 52, 45);
+        marvelDeck[45] = new Card(46, "STAR-LORD", 76, 85, 50, 45, 78);
+        marvelDeck[46] = new Card(47, "HAWKEYE", 62, 90, 40, 77, 91);
+        marvelDeck[47] = new Card(48, "HELA", 99, 86, 97, 90, 95);
+        marvelDeck[48] = new Card(49, "MANTIS", 75, 25, 10, 15, 5);
+        marvelDeck[49] = new Card(50, "CAPTAIN MARVEL", 98, 93, 96, 91, 96);
+        marvelDeck[50] = new Card(51, "SURTUR", 99, 20, 100, 75, 70);
+        marvelDeck[51] = new Card(52, "HEIMDALL", 85, 75, 89, 82, 85);
+        marvelDeck[52] = new Card(53, "ANCIENT ONE", 89, 20, 1, 90, 90);
+        marvelDeck[53] = new Card(54, "AGATHA HARKNESS", 80, 50, 30, 70, 50);
+        marvelDeck[54] = new Card(55, "GRANDMASTER", 30, 10, 5, 75, 15);
+        marvelDeck[55] = new Card(56, "BLACK DWARF", 90, 50, 94, 30, 75);
+        marvelDeck[56] = new Card(57, "WASP", 77, 100, 74, 70, 86);
+        marvelDeck[57] = new Card(58, "PROFESSOR HULK", 95, 65, 98, 98, 65);
+        marvelDeck[58] = new Card(59, "BATMAN", 95, 65, 98, 98, 65);
+        marvelDeck[59] = new Card(60, "SUPERMAN", 95, 65, 98, 98, 65);
 
         char deckInd = 'D';
         int numCards = 0;
@@ -370,8 +407,6 @@ public class Card {
                 }
             }
         }
-
-
 
         //main section of the game, only go through this if we have enough players left
         while ((numP == 2 && deck1.size() != 0 && deck2.size() != 0) ||
