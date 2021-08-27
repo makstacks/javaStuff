@@ -227,8 +227,8 @@ public class Card {
         marvelDeck[55] = new Card(56, "BLACK DWARF", 90, 50, 94, 30, 75);
         marvelDeck[56] = new Card(57, "WASP", 77, 100, 74, 70, 86);
         marvelDeck[57] = new Card(58, "PROFESSOR HULK", 95, 65, 98, 98, 65);
-        marvelDeck[58] = new Card(59, "BATMAN", 95, 65, 98, 98, 65);
-        marvelDeck[59] = new Card(60, "SUPERMAN", 95, 65, 98, 98, 65);
+        marvelDeck[58] = new Card(59, "EBONY MAW", 95, 65, 98, 98, 65);
+        marvelDeck[59] = new Card(60, "VULTURE", 95, 65, 98, 98, 65);
 
         char deckInd = 'D';
         int numCards = 0;
