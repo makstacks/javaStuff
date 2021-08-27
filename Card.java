@@ -43,8 +43,6 @@ public class Card {
                 drawIndArray[i] = 1;   // set to a 1 if into next round
             }
         }
-        for (int i=0; i<4; i++) {
-        System.out.println(drawIndArray[i]);}
         return drawIndArray;
     }//end method draw lose stuff
 
@@ -161,8 +159,8 @@ public class Card {
         athletesDeck[21] = new Card(22, "MUHAMMAD ALI", 21, 97, 92, 87, 8);
         athletesDeck[22] = new Card(23, "FLOYD MAYWEATHER", 19, 77, 89, 91, 4);
         athletesDeck[23] = new Card(24, "TYSON FURY", 13, 79, 76, 91, 9);
-        athletesDeck[24] = new Card(25, "LEWIS HAMILTON", 15, 87, 70, 90, 5);
-        athletesDeck[25] = new Card(26, "MICHAEL SCHUMACHER", 19, 87, 65, 89, 5);
+        athletesDeck[24] = new Card(25, "LEWIS HAMILTON", 15, 87, 73, 90, 5);
+        athletesDeck[25] = new Card(26, "MICHAEL SCHUMACHER", 19, 87, 66, 89, 5);
         athletesDeck[26] = new Card(27, "TONY HAWK", 17, 84, 76, 93, 7);
         athletesDeck[27] = new Card(28, "RONNIE O'SULLIVAN", 27, 72, 17, 95, 9);
         athletesDeck[28] = new Card(29, "LANCE ARMSTRONG", 19, 79, 84, 87, 3);
@@ -194,20 +192,6 @@ public class Card {
         marvelDeck[20] = new Card(21, "EGO", 89, 15, 98, 90, 40);
         marvelDeck[21] = new Card(22, "THE WINTER SOLDIER", 89, 88, 86, 67, 90);
         marvelDeck[22] = new Card(23, "THOR", 99, 93, 98, 92, 97);
-
-/*
-        Card[] marvelDeck = new Card[9];
-        marvelDeck[0] = new Card(1, "SPIDERMAN", 90, 99, 94, 92, 96);
-        marvelDeck[1] = new Card(2, "IRON MAN", 90, 90, 88, 93, 95);
-        marvelDeck[2] = new Card(3, "THANOS", 90, 83, 97, 96, 96);
-        marvelDeck[3] = new Card(4, "HULK", 9, 65, 100, 25, 60);
-        marvelDeck[4] = new Card(5, "NICK FURY", 3, 50, 45, 77, 58);
-        marvelDeck[5] = new Card(6, "LOKI", 90, 65, 82, 96, 72);
-        marvelDeck[6] = new Card(7, "ALGRIM", 90, 60, 99, 40, 76);
-        marvelDeck[7] = new Card(8, "TREVOR SLATTERY", 90, 1, 5, 1, 1);
-        marvelDeck[8] = new Card(9, "ARNIM ZOLA", 0, 0, 0, 91, 0);
-debugging using this deck
-        */
 
         char deckInd = 'D';
         int numCards = 0;
@@ -763,6 +747,7 @@ debugging using this deck
                 continue;
             }
 
+
             //assigning ratings to each player
             //player 1's turn
             if (playerInd == 1 ) {
@@ -840,6 +825,20 @@ debugging using this deck
                     rp3 = 0;
                 }
             }
+
+
+            //setting up a matrix of length 4 to contain each of the player's score, finding who has tied (for when > 3p and there is a draw)
+            int[] rpCur = {rp1, rp2, rp3, rp4};
+            int maxRat = rpCur[0];
+
+            for (int i = 1; i<4; i++) {
+                if (rpCur[i] > maxRat) {
+                    maxRat = rpCur[i];
+                }
+            }
+            //now the largest value in every round is stored in maxRat
+
+
 
             //finding winner and assigning cards for 2p game
             if (numP == 2) {
@@ -974,15 +973,27 @@ debugging using this deck
                         drawDeck.add(deck3.get(0));
                         deck3.remove(0);
                     }
-                    System.out.println("\nDraw");
+                    System.out.print("\nDraw between ");
+                    if (rp1 == maxRat) {
+                        System.out.println("P1 and ");
+                    }
+                    if (rp2 == maxRat && rp3 != maxRat) {
+                        System.out.print("P2. \n");
+                    }
+                    if (rp2 == maxRat && rp3 == maxRat) {
+                        System.out.print("P2 and P3. \n");
+                    }
+                    if (rp3 == maxRat && rp2 != maxRat) {
+                        System.out.print("P3.\n");
+                    }
                 }
-                if (pOut != 1) {
+                if (pOut != 1 || pIgnA == 1 || pIgnB == 1) {
                     System.out.print("P1 has " + deck1.size() + " cards. ");
                 }
-                if (pOut != 2) {
+                if (pOut != 2 || pIgnA == 2 || pIgnB == 2) {
                     System.out.print("P2 has " + deck2.size() + " cards. ");
                 }
-                if (pOut != 3) {
+                if (pOut != 3 || pIgnA == 3 || pIgnB == 3) {
                     System.out.print("P3 has " + deck3.size() + " cards. ");
                 }
                 if (drawDeck.isEmpty() == false) {
@@ -1147,18 +1158,42 @@ debugging using this deck
                         drawDeck.add(deck3.get(0));
                         deck3.remove(0);
                     }
-                    System.out.println("\nDraw");
+                    System.out.print("\nDraw between ");
+                    if (rp1 == maxRat) {
+                        System.out.print("P1 and ");
+                    }
+                    if (rp2 == maxRat && rp3 != maxRat && rp4 != maxRat) {
+                        System.out.print("P2. \n");
+                    }
+                    if (rp2 == maxRat && rp3 == maxRat && rp4 != maxRat) {
+                        System.out.print("P2 and P3. \n");
+                    }
+                    if (rp3 == maxRat && rp2 != maxRat && rp4 != maxRat) {
+                        System.out.print("P3. \n");
+                    }
+                    if (rp4 == maxRat && rp2 != maxRat && rp3 != maxRat) {
+                        System.out.print("P4. \n");
+                    }
+                    if (rp4 == maxRat && rp2 != maxRat && rp3 == maxRat) {
+                        System.out.print("P3 and P4. \n");
+                    }
+                    if (rp4 == maxRat && rp2 == maxRat && rp3 != maxRat) {
+                        System.out.print("P2 and P4. \n");
+                    }
+                    if (rp4 == maxRat && rp2 == maxRat && rp3 == maxRat) {
+                        System.out.print("P2, P3 and P4. \n");
+                    }
                 }
-                if (pOut != 1 && pOut2 != 1) {
+                if ((pOut != 1 && pOut2 != 1) || pIgnA == 1 || pIgnB == 1) {
                     System.out.print("P1 has " + deck1.size() + " cards. ");
                 }
-                if (pOut != 2&& pOut2 != 2) {
+                if ((pOut != 2 && pOut2 != 2) || pIgnA == 2 || pIgnB == 2) {
                     System.out.print("P2 has " + deck2.size() + " cards. ");
                 }
-                if (pOut != 3 && pOut2 != 3) {
+                if ((pOut != 3 && pOut2 != 3) || pIgnA == 3 || pIgnB == 3) {
                     System.out.print("P3 has " + deck3.size() + " cards. ");
                 }
-                if (pOut != 4 && pOut2 != 4) {
+                if ((pOut != 4 && pOut2 != 4) || pIgnA == 4 || pIgnB == 4) {
                     System.out.print("P4 has " + deck4.size() + " cards. ");
                 }
                 if (drawDeck.isEmpty() == false) {
