@@ -48,13 +48,21 @@ public class Card {
 
     //method to show card during the game
     public void showCard(String c1, String c2, String c3, String c4, String c5) {
+        //calculating how long each category string is so we can right justify the numbers
+        int c1l = c1.length();
+        int c2l = c2.length();
+        int c3l = c3.length();
+        int c4l = c4.length();
+        int c5l = c5.length();
 
+        System.out.println("________________________");
         System.out.println(name);
-        System.out.println(c1 + ": " + rating1);
-        System.out.println(c2 + ": " + rating2);
-        System.out.println(c3 + ": " + rating3);
-        System.out.println(c4 + ": " + rating4);
-        System.out.println(c5 + ": " + rating5);
+        System.out.printf("%-20s %d%n", c1 + ":", rating1);
+        System.out.printf("%-20s %d%n", c2 + ":", rating2);
+        System.out.printf("%-20s %d%n", c3 + ":", rating3);
+        System.out.printf("%-20s %d%n", c4 + ":", rating4);
+        System.out.printf("%-20s %d%n", c5 + ":", rating5);
+        System.out.println("________________________");
     }
 
     //method to ask user to hit enter in between rounds
